@@ -1,0 +1,5 @@
+venv
+.vscode
+services
+templates
+api/reset_password

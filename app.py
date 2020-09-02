@@ -33,6 +33,9 @@ def get_flask_app(config: dict = None) -> app.Flask:
     # init flask
     flask_app = Flask(__name__)
 
+	# init CORS
+	CORS(app=flask_app)
+
     # configure app
     config = default_config if config is None else config
     flask_app.config.update(config)
@@ -54,11 +57,7 @@ def get_flask_app(config: dict = None) -> app.Flask:
     # init jwt manager
     jwt = JWTManager(app=flask_app)
 
-	# init CORS
-	CORS(flask_app)
-
     return flask_app
-
 
 if __name__ == '__main__':
     # Main entry point when run in stand-alone mode.

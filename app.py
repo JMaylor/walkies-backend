@@ -55,7 +55,7 @@ def get_flask_app(config: dict = None) -> app.Flask:
     jwt = JWTManager(app=flask_app)
 
 	# init CORS
-	CORS(app)
+	CORS(flask_app)
 
     return flask_app
 

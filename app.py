@@ -2,6 +2,7 @@
 from flask import Flask, app
 from flask_bcrypt import Bcrypt
 from flask_restful import Api
+from flask_cors import CORS
 from flask_mongoengine import MongoEngine
 from flask_jwt_extended import JWTManager
 
@@ -52,6 +53,9 @@ def get_flask_app(config: dict = None) -> app.Flask:
 
     # init jwt manager
     jwt = JWTManager(app=flask_app)
+
+	# init CORS
+	CORS(app)
 
     return flask_app
 

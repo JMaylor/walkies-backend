@@ -8,6 +8,7 @@ from flask_jwt_extended import JWTManager
 
 # local packages
 from api.routes import create_routes
+from api.errors import errors
 
 # external packages
 import os
@@ -48,7 +49,7 @@ def get_flask_app(config: dict = None) -> app.Flask:
         flask_app.config['JWT_SECRET_KEY'] = os.environ['JWT_SECRET_KEY']
 
     # init api and routes
-    api = Api(app=flask_app)
+    api = Api(app=flask_app, errors=errors)
     create_routes(api=api)
 
     # init mongoengine
@@ -63,4 +64,4 @@ def get_flask_app(config: dict = None) -> app.Flask:
 if __name__ == '__main__':
     # Main entry point when run in stand-alone mode.
     app = get_flask_app()
-    app.run(debug=True)
+    app.run(debug=False)

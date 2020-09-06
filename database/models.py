@@ -53,6 +53,12 @@ class User(db.Document):
 	location = db.PointField(required=True)
 	dogs = db.ListField(db.ReferenceField(Dog, reverse_delete_rule=db.PULL))
 	events = db.ListField(db.ReferenceField(Event, reverse_delete_rule=db.PULL))
+
+	def to_json(self):
+		data = self.to_mongo()
+		data["dogs"] = [dog.to_json() for dog in self.dogs]
+		data["events"] = [event.to_json() for event in self.events]
+		return json_util.dumps(data)
 	
 	def hash_password(self):
 		self.password = generate_password_hash(self.password).decode('utf8')

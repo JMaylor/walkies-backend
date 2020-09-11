@@ -15,14 +15,15 @@ class UserApi(Resource):
 
 class UserSearchApi(Resource):
     @jwt_required
-    def get(self):
+    def post(self):
         # get user id
         user_id = get_jwt_identity()
         user = User.objects.get(id=user_id)
 
         # retrieve the distance sent in the request
         body = request.get_json()
-        distance = body['distance']
+        distance = float(body['distance'])
+
 
         # distance is going to be sent in miles - need to convert to radius
         distance_in_radians = distance / 3963.2

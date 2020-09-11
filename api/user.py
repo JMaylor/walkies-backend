@@ -16,9 +16,18 @@ class UserApi(Resource):
 class UserSearchApi(Resource):
     @jwt_required
     def get(self):
+        # get user id
         user_id = get_jwt_identity()
         user = User.objects.get(id=user_id)
-        users = User.objects(location__geo_within_sphere=[user.location['coordinates'], 0.2], id__ne=user_id).exclude(
+
+        # retrieve the distance sent in the request
+        body = request.get_json()
+        distance = body['distance']
+
+        # distance is going to be sent in miles - need to convert to radius
+        distance_in_radians = distance / 3963.2
+
+        users = User.objects(location__geo_within_sphere=[user.location['coordinates'], distance_in_radians], id__ne=user_id).exclude(
             'password').exclude('email').exclude('events').exclude('last_name')
         users = [user.to_json() for user in users]
 

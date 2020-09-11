@@ -18,7 +18,7 @@ class UserSearchApi(Resource):
     def get(self):
         user_id = get_jwt_identity()
         user = User.objects.get(id=user_id)
-        users = User.objects(location__geo_within_radius=[user.location['coordinates'], 0.2], id__ne=user_id).exclude(
+        users = User.objects(location__geo_within_sphere=[user.location['coordinates'], 0.2], id__ne=user_id).exclude(
             'password').exclude('email').exclude('events').exclude('last_name')
         users = [user.to_json() for user in users]
 

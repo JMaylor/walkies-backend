@@ -28,7 +28,7 @@ class UserSearchApi(Resource):
         # distance is going to be sent in miles - need to convert to radius
         distance_in_radians = distance / 3963.2
 
-        users = User.objects(location__geo_within_sphere=[user.location['coordinates'], distance_in_radians], id__ne=user_id).exclude(
+        users = User.objects(location__geo_within_center=[user.location['coordinates'], distance_in_radians], id__ne=user_id).exclude(
             'password').exclude('email').exclude('events').exclude('last_name')
         users = [user.to_json() for user in users]
 

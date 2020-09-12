@@ -50,6 +50,7 @@ class User(db.Document):
 	password = db.StringField(required=True, min_length=8)
 	first_name = db.StringField(required=True, max_length=30)
 	last_name = db.StringField(required=True, max_length=30)
+	date_of_birth = db.DateTimeField(required=True)
 	location = db.PointField(required=True)
 	dogs = db.ListField(db.ReferenceField(Dog, reverse_delete_rule=db.PULL))
 	events = db.ListField(db.ReferenceField(Event, reverse_delete_rule=db.PULL))

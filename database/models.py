@@ -51,6 +51,13 @@ class User(db.Document):
 	first_name = db.StringField(required=True, max_length=30)
 	last_name = db.StringField(required=True, max_length=30)
 	date_of_birth = db.DateTimeField(required=True)
+
+	genders = (
+		'Male',
+		'Female'
+	)
+	gender = db.StringField(required=True, choices=genders)
+
 	location = db.PointField(required=True)
 	dogs = db.ListField(db.ReferenceField(Dog, reverse_delete_rule=db.PULL))
 	events = db.ListField(db.ReferenceField(Event, reverse_delete_rule=db.PULL))

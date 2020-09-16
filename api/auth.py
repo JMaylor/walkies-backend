@@ -16,7 +16,9 @@ class SignupApi(Resource):
 			user.hash_password()
 			user.save()
 			id = user.id
-			return {'id': str(id)}, 200
+			expires = datetime.timedelta(days=7)
+			access_token = create_access_token(identity=str(id), expires_delta=expires)
+			return {'id': str(id), 'token': access_token}, 200
 		except FieldDoesNotExist:
 			raise SchemaValidationError
 		except NotUniqueError:

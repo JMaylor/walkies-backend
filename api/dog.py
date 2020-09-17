@@ -35,7 +35,7 @@ class DogApi(Resource):
         dog = Dog.objects.get(id=id, owner=user_id)
         body = request.get_json()
         Dog.objects.get(id=id).update(**body)
-        return '', 200
+        return {'dog': dog.to_json()}, 200
 
     @jwt_required
     def delete(self, id):

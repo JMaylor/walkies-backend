@@ -37,7 +37,7 @@ class Event(db.Document):
 		'1 hour',
 		'2 hours or more'
 	)
-	length = db.StringField(required=True, choices=lengths)
+	length = db.StringField(choices=lengths)
 
 	def to_json(self):
 		data = self.to_mongo()

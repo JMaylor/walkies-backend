@@ -11,19 +11,12 @@ class UserApi(Resource):
         user_id = get_jwt_identity()
         user = User.objects.exclude('password').get(id=user_id)
         return {'user': user.to_json()}, 200
-	
-	@jwt_required
-    def put(self):
-        user_id = get_jwt_identity()
-		user = User.objects.get(id=user_id)
-        user.update(**body)
-        return '', 200
 
     @jwt_required
     def put(self):
         user_id = get_jwt_identity()
         user = User.objects.get(id=user_id)
-		body = request.get_json()
+        body = request.get_json()
         user.update(**body)
         return '', 200
 

@@ -43,12 +43,13 @@ class EventApi(Resource):
 	def put(self, id):
 		user_id = get_jwt_identity()
 		body = request.get_json()
-		Event.objects.get(Q(id=id) & (Q(proposer=user_id) | Q(invited=user_id))).update(location=body['location'], time=body['time'], length=body['length'], status='pending')
+		Event.objects.get(Q(id=id) & (Q(proposer=user_id) | Q(invited=user_id))).update(**body)
 		event = Event.objects.get(id=id)
 		invited = User.objects.get(id=body['invited'])
 		proposer = User.objects.get(id=body['proposer'])
 		event.invited = invited
 		event.proposer = proposer
+		event.status = 'pending'
 		event.save()
 		return {'event': event.to_json()}, 200
 
